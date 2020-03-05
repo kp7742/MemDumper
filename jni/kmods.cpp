@@ -56,17 +56,11 @@ int main(int argc, char *argv[]) {
 	uint8* buffer = new uint8[size];
 	memset(buffer, '\0', size);
 	vm_readv((void*) start_addr, buffer, size);
-	ofstream sdk(lib_name + ".dump", ofstream::out | ofstream::binary);
-	if (sdk.is_open()) {
-		sdk.write((char*)buffer, size);
+	ofstream dmp(lib_name + ".dump", ofstream::out | ofstream::binary);
+	if (dmp.is_open()) {
+		dmp.write((char*)buffer, size);
 	}
-	sdk.close();
+	dmp.close();
 	printf("----------------------------\n");
 	return 0;
 }
-
-
-
-
-
-

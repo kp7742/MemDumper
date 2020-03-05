@@ -4,6 +4,12 @@ Dump Memory of Process in Android With Root Access
 ## Features
 - No need of Ptrace
 - Fast Dumping
+
+## How to Build
+- Install Android NDK, if not.
+- Open Shell in This Folder
+- Use and Execute ndk-build of NDK Here
+- Output will be in libs Folder.
  
 ## How to use
 - Needs Root Access

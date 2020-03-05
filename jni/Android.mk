@@ -18,7 +18,3 @@ LOCAL_CPP_INCLUDES += $(LOCAL_PATH)
 LOCAL_LDLIBS += -llog
 
 include $(BUILD_EXECUTABLE)
-
-
-
-
