@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstddef>
+#include <ctime>
 #include <unistd.h>
 #include <string>
 #include <iostream>
@@ -31,36 +32,39 @@ int main(int argc, char *argv[]) {
 	printf("Pid: %d\n", target_pid);
 
 	string lib_name = string(argv[2]);
-	kaddr start_addr = strtoul(argv[3], nullptr, 16);
-	kaddr end_addr = strtoul(argv[4], nullptr, 16);
-
-	libbase = get_module_base(lib_name.c_str());
-	if (libbase < 1 && start_addr < 1) {
+	kaddr start_addr = get_module_base(lib_name.c_str());
+	if (start_addr < 1) {
 		printf("Can't find module\n");
 		return -1;
 	}
-
+	
+	kaddr end_addr = get_module_end(lib_name.c_str());
 	if (end_addr < start_addr) {
 		printf("Start Address Should be Smaller\n");
 		return -1;
 	}
 
-	if (libbase != start_addr) {
-		printf("Warning: Start Address is not Module Address\n");
-	}
-
 	int size = (end_addr - start_addr);
 	printf("----------------------------\n");
-	printf("Base Address of %s Found At %lx\n", lib_name.c_str(), libbase);
-	printf("Dumping %d Size of Data\n", size);
-	uint8* buffer = new uint8[size];
-	memset(buffer, '\0', size);
-	vm_readv((void*) start_addr, buffer, size);
-	ofstream dmp(lib_name + ".dump", ofstream::out | ofstream::binary);
+	printf("Base Address of %s Found At %lx\n", lib_name.c_str(), start_addr);
+	printf("End Address of %s Found At %lx\n", lib_name.c_str(), end_addr);
+	printf("Dumping %d Size of Data, Please Wait...\n", size);
+	
+	clock_t begin = clock();
+	ofstream dmp(lib_name, ofstream::out | ofstream::binary);
 	if (dmp.is_open()) {
-		dmp.write((char*)buffer, size);
+		char* buffer = new char[1];
+        while(size != 0){
+            vm_readv((void*) (start_addr++), buffer, 1);
+            dmp.write(buffer, 1);
+            --size;
+        }
 	}
 	dmp.close();
+	clock_t end = clock();
+	
+	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+	printf("Lib Dumped in %fS\n", elapsed_secs);	
 	printf("----------------------------\n");
 	return 0;
 }

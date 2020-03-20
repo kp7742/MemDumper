@@ -86,6 +86,23 @@ kaddr get_module_base(const char *module_name) {
     return addr;
 }
 
+kaddr get_module_end(const char *module_name) {
+	FILE *fp;
+	kaddr addr = 0;
+	char filename[32], buffer[1024];
+	snprintf(filename, sizeof(filename), "/proc/%d/maps", target_pid);
+	fp = fopen(filename, "rt");
+	if (fp != nullptr) {
+		while (fgets(buffer, sizeof(buffer), fp)) {
+			if (strstr(buffer, module_name)) {
+				addr = (uintptr_t)strtoul(buffer+(sizeof(intptr_t)*2)+1, nullptr, 16);
+			}
+		}
+		fclose(fp);
+	}
+	return addr;
+}
+
 kaddr getRealOffset(kaddr offset) {
     if (libbase == 0) {
         LOGW("Error: Can't Find Base Addr for Real Offset");
