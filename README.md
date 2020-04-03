@@ -12,13 +12,13 @@ Dump Memory Segment From Process Memory and Rebuild So(Elf) Libraries
 
 ## How to Build
 - Install Android NDK, if not.
-- Open Shell in This Folder
-- Use and Execute ndk-build of NDK Here
+- Open Shell in Project Folder
+- Use and Execute ndk-build of NDK in Project Folder
 - Output will be in libs Folder.
  
 ## How to use
 - Needs Root Access or Virtual Space
-- Get Root Shell through Adb or Terminal Apps or Normal Shell into Virtual Shell via Terminal Apps
+- Get Root Shell through Adb or Terminal Apps or Normal Shell into Virtual Space via Terminal Apps
 - For Usage Help: memdumper -h
 - For General Usage: memdumper -p <packageName> <option(s)> -o <outputPath>
 
