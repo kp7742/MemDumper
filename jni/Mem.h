@@ -8,26 +8,6 @@ using namespace std;
 
 typedef unsigned long kaddr;
 
-// Unsigned base types.
-typedef unsigned char 		uint8;
-typedef unsigned short int	uint16;
-typedef unsigned int		uint32;
-typedef unsigned long long	uint64;
-
-// Signed base types.
-typedef	signed char			int8;
-typedef signed short int	int16;
-typedef signed int	 		int32;
-typedef signed long long	int64;
-
-// Character types.
-typedef char				ANSICHAR;
-typedef wchar_t				WIDECHAR;
-typedef uint8				CHAR8;
-typedef uint16				CHAR16;
-typedef uint32				CHAR32;
-typedef WIDECHAR			TCHAR;
-
 static kaddr libbase = 0;
 
 pid_t find_pid(const char* process_name) {
@@ -77,7 +57,7 @@ kaddr get_module_base(const char *module_name) {
     if (fp != nullptr) {
         while (fgets(buffer, sizeof(buffer), fp)) {
             if (strstr(buffer, module_name)) {
-                addr = (uintptr_t)strtoul(buffer, nullptr, 16);
+                sscanf(buffer, "%lx-%*s", &addr);
                 break;
             }
         }
@@ -88,14 +68,14 @@ kaddr get_module_base(const char *module_name) {
 
 kaddr get_module_end(const char *module_name) {
 	FILE *fp;
-	kaddr addr = 0;
+	kaddr temp = 0, addr = 0;
 	char filename[32], buffer[1024];
 	snprintf(filename, sizeof(filename), "/proc/%d/maps", target_pid);
 	fp = fopen(filename, "rt");
 	if (fp != nullptr) {
 		while (fgets(buffer, sizeof(buffer), fp)) {
 			if (strstr(buffer, module_name)) {
-				addr = (uintptr_t)strtoul(buffer+(sizeof(intptr_t)*2)+1, nullptr, 16);
+                sscanf(buffer, "%lx-%lx %*s",&temp, &addr);
 			}
 		}
 		fclose(fp);

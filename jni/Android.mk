@@ -11,10 +11,13 @@ LOCAL_CFLAGS += -ffunction-sections -fdata-sections -fvisibility=hidden
 LOCAL_CFLAGS += -fno-rtti -fno-exceptions
 LOCAL_CFLAGS += -DNDEBUG
 
-LOCAL_SRC_FILES := kmods.cpp
+LOCAL_SRC_FILES := ELF/ElfReader.cpp \
+                   ELF/ElfRebuilder.cpp \
+                   kmods.cpp \
 
 LOCAL_CPP_INCLUDES += $(LOCAL_PATH)
+LOCAL_CPP_INCLUDES += $(LOCAL_PATH)/ELF
 
-LOCAL_LDLIBS += -llog
+LOCAL_LDLIBS += -L$(SYSROOT)/usr/lib -lz -llog
 
 include $(BUILD_EXECUTABLE)
