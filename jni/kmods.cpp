@@ -32,7 +32,7 @@ const struct option long_options[] = {
 };
 
 void Usage() {
-	printf("MemDumper v0.2 <==> Made By KMODs(kp7742)\n");
+	printf("MemDumper v0.3 <==> Made By KMODs(kp7742)\n");
 	printf("Usage: memdumper -p <packageName> <option(s)> -o <outputPath>\n");
 	printf("Dump Memory Segment From Process Memory and Rebuild So(Elf) Libraries\n");
 	printf("-l for Library Mode, -m for Manual Dumping Mode, By Default Auto Dumping Mode\n");
@@ -231,6 +231,8 @@ int main(int argc, char *argv[]) {
             ldump.close();
 
             //SoFixer Code//
+			cout << "Rebuilding Elf(So)" << endl;
+			
             elf_reader.setDumpSoFile(true);
             elf_reader.setDumpSoBaseAddr(start_addr);
 
