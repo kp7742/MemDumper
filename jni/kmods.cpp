@@ -32,8 +32,8 @@ const struct option long_options[] = {
 };
 
 void Usage() {
-	printf("MemDumper v0.3 <==> Made By KMODs(kp7742)\n");
-	printf("Usage: memdumper -p <packageName> <option(s)> -o <outputPath>\n");
+	printf("MemDumper v0.4 <==> Made By KMODs(kp7742)\n");
+	printf("Usage: memdumper -p <packageName> <option(s)>\n");
 	printf("Dump Memory Segment From Process Memory and Rebuild So(Elf) Libraries\n");
 	printf("-l for Library Mode, -m for Manual Dumping Mode, By Default Auto Dumping Mode\n");
 	printf(" Options:\n");
@@ -51,7 +51,7 @@ void Usage() {
 	printf("--Other Args----------------------------------------------------------------------------\n");
 	printf("  -f --fast(Optional)                   Enable Fast Dumping(May Miss Some Bytes in Dump)\n");
 	printf("  -p --package <packageName>            Package Name of App\n");
-	printf("  -o --output <outputPath>              File Output path\n");
+	printf("  -o --output <outputPath>              File Output path(Default: /sdcard)\n");
 	printf("  -h --help                             Display this information\n");
 }
 
@@ -79,7 +79,7 @@ kaddr getHexAddr(const char* addr){
 
 int main(int argc, char *argv[]) {
     int c;
-    string pkg, name, outputpath;
+    string pkg, name, outputpath("/sdcard");
     bool isValidArg = true, isManualDump = false, isLibDump = false, isFastDump = false, isRawDump = false;
     kaddr startAddr = 0, endAddr = 0;
 

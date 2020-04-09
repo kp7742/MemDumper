@@ -19,8 +19,8 @@ Dump Memory Segment From Process Memory and Rebuild So(Elf) Libraries
 	```
 	 Help: ./memdumper -h
 	 
-	 MemDumper v0.3 <==> Made By KMODs(kp7742)
-	 Usage: memdumper -p <packageName> <option(s)> -o <outputPath>
+	 MemDumper v0.4 <==> Made By KMODs(kp7742)
+	 Usage: memdumper -p <packageName> <option(s)>
 	 Dump Memory Segment From Process Memory and Rebuild So(Elf) Libraries
 	 -l for Library Mode, -m for Manual Dumping Mode, By Default Auto Dumping Mode
 	  Options:
@@ -38,7 +38,7 @@ Dump Memory Segment From Process Memory and Rebuild So(Elf) Libraries
 	 --Other Args----------------------------------------------------------------------------
 	   -f --fast(Optional)                   Enable Fast Dumping(May Miss Some Bytes in Dump)
 	   -p --package <packageName>            Package Name of App
-	   -o --output <outputPath>              File Output path
+	   -o --output <outputPath>              File Output path(Default: /sdcard)
 	   -h --help                             Display this information
 	  
 	```
